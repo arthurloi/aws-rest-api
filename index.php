@@ -11,6 +11,14 @@ require 'interfacesAWS.php';
 
 $app = AppFactory::create();
 
+$app->get('/running', function (Request $request, Response $response, array $args) {
+    $status = array("restapi"=>"running");
+    $jsonResponse = json_encode(($status));
+
+    $response->getBody()->write($jsonResponse);
+    return $response->withHeader('Content-Type', 'application/json');;
+});
+
 $app->get('/listid', function (Request $request, Response $response, array $args) {
     $query = $request->getQueryParams();
     $writer = new Writer('logs.logs');
@@ -40,7 +48,7 @@ $app->get('/listid', function (Request $request, Response $response, array $args
     return $response->withHeader('Content-Type', 'application/json');;
 });
 
-$app->post('/manage', function (Request $request, Response $response, array $args) {
+$app->get('/manage', function (Request $request, Response $response, array $args) {
     $query = $request->getQueryParams();
     $writer = new Writer('logs.logs');
 

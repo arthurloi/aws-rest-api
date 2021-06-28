@@ -143,6 +143,27 @@ class InstanceManager {
      * @param $instanceid
      */
     public function restart($instanceid){
+
+        set_exception_handler(
+            function ($e) {
+
+                $this->writer->echoTest(json_encode(array(
+                    'error' => array(
+                        'code' => $e->getAwsErrorCode(),
+                        'message' => $e->getMessage()
+                    )
+                ),JSON_PRETTY_PRINT));
+
+                $this->writer->writeLogs(json_encode(array(
+                    'error' => array(
+                        'code' => $e->getAwsErrorCode(),
+                        'message' => $e->getMessage()
+                    )
+                ),JSON_PRETTY_PRINT),$this->writer->getLogfile());
+
+
+            });
+
         $this->ec2client->stopInstances(array(
             'InstanceIds' => array($instanceid),
         ));
@@ -154,6 +175,9 @@ class InstanceManager {
         $this->ec2client->startInstances(array(
             'InstanceIds' => array($instanceid),
         ));
+
+        $this->writer->writeLogs($this->instanceInfo($instanceid),$this->writer->getLogfile());
+        return $this->instanceInfo($instanceid);
     }
 
     /**
@@ -232,6 +256,11 @@ class InstanceManager {
         return $listStopped;
     }
 
+    /**
+     * Retourne la liste des instances du client dans un tableau.
+     *
+     * @return array
+     */
     public function getIdInstances(){
         set_exception_handler(
             function ($e) {
@@ -264,6 +293,12 @@ class InstanceManager {
         return $listInstances;
     }
 
+    /**
+     * Retourne l'état d'une instance à l'aide de son ID.
+     *
+     * @param $instanceid
+     * @return mixed|string
+     */
     public function instanceStatus($instanceid){
         $clientinfo = $this->clientInfo();
 
@@ -277,33 +312,5 @@ class InstanceManager {
 
         return $instancestate;
     }
-
-    public function create($imageid,$instancetype,$keyname,$securitygroup): void
-    {
-        $this->ec2client->runInstances(array(
-            'ImageId'        => $imageid,
-            'MinCount'       => 1,
-            'MaxCount'       => 1,
-            'InstanceType'   => $instancetype,
-            'KeyName'        => $keyname,
-            'SecurityGroups' => array($securitygroup),
-        ));
-    }
-
-    public function createKP($keyPairName): void{
-        $result = $this->ec2client->createKeyPair(array(
-            'KeyName' => $keyPairName
-        ));
-
-        $saveKeyLocation = "{$keyPairName}.pem";
-        echo($result['KeyMaterial']);
-        file_put_contents($saveKeyLocation, $result['KeyMaterial']);
-        chmod($saveKeyLocation, 0600);
-    }
-
-    public function createSecurityGroup(): void{
-
-    }
-
 }
 
