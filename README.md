@@ -27,7 +27,7 @@ This will install all dependencies needed for the project.
 To launch the API, execute :
 
 ```bash
-php -S localhost:8080 -t public index.php
+php -S localhost:8080 index.php
 ```
 ### '/running'
 
