@@ -43,7 +43,7 @@ Take as query parameters :\
 
 ### '/manage'
 
-GET Request to receive the list of instances of the client.
+GET Request to start or stop an instance with its ID.
 
 Take as query parameters :\
 'region' : region of your AWS account.\
