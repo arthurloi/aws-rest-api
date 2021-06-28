@@ -216,9 +216,9 @@ class InstanceManager {
 
     }
 
-
     /**
      * Retourne la liste des instances en fonction de l'état demandé.
+     *
      *
      * @param string $state
      * $state peut être 'running' ou 'stopped'
@@ -237,6 +237,26 @@ class InstanceManager {
         }
 
         return $listInstances;
+    }
+
+    /**
+     * Retourne la liste des instances en cours d'exécution.
+     *
+     * @return string
+     */
+    public function getRunningInstances(): string
+    {
+        return $this->getInstancesByState('running');
+    }
+
+    /**
+     * Retourne la liste des instances stoppées.
+     *
+     * @return string
+     */
+    public function getStoppedInstances(): string
+    {
+        return $this->getInstancesByState('stopped');
     }
 
     /**
