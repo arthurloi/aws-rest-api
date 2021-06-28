@@ -37,20 +37,20 @@ GET Request to the rest API to know if it is up.
 
 GET Request to receive the list of instances of the client.
 Take as query parameters :
-'region' : region of your AWS account.
-'key' : key of your AWS account. 
-'secret' : secret of your AWS account.
+'region' : region of your AWS account.\
+'key' : key of your AWS account.\
+'secret' : secret of your AWS account.\
 
 ### '/manage'
 
 GET Request to receive the list of instances of the client.
 
 Take as query parameters :
-'region' : region of your AWS account.
-'key' : key of your AWS account. 
-'secret' : secret of your AWS account.
-'action' : 'start' or 'stop'. Depends if you want to start or stop an instance.
-'id' : the instance id which you want to start or stop.
+'region' : region of your AWS account.\
+'key' : key of your AWS account.\
+'secret' : secret of your AWS account.\
+'action' : 'start' or 'stop'. Depends if you want to start or stop an instance.\
+'id' : the instance id which you want to start or stop.\
 
 ## Built With
 
