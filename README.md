@@ -36,7 +36,7 @@ GET Request to the rest API to know if it is up.
 ### '/listid'
 
 GET Request to receive the list of instances of the client.
-Take as query parameters :
+Take as query parameters :\
 'region' : region of your AWS account.\
 'key' : key of your AWS account.\
 'secret' : secret of your AWS account.
@@ -45,7 +45,7 @@ Take as query parameters :
 
 GET Request to receive the list of instances of the client.
 
-Take as query parameters :
+Take as query parameters :\
 'region' : region of your AWS account.\
 'key' : key of your AWS account.\
 'secret' : secret of your AWS account.\
