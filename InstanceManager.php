@@ -216,44 +216,27 @@ class InstanceManager {
 
     }
 
+
     /**
-     * Retourne la liste des instances en cours d'exécution.
+     * Retourne la liste des instances en fonction de l'état demandé.
+     *
+     * @param string $state
+     * $state peut être 'running' ou 'stopped'
      *
      * @return string
      */
-    public function getRunningInstances(): string
-    {
+    public function getInstancesByState(string $state){
         $result = $this->clientInfo();
 
-        $listRunning = 'Running instances : ';
+        $listInstances = '';
 
         foreach($result['Reservations'] as $instances){
-            if($instances['Instances'][0]['State']['Name'] == 'running'){
-                $listRunning = $listRunning .$instances['Instances'][0]['InstanceId'].' ';
+            if($instances['Instances'][0]['State']['Name'] == $state){
+                $listInstances = $listInstances .$instances['Instances'][0]['InstanceId'].' ';
             }
         }
 
-        return $listRunning;
-    }
-
-    /**
-     * Retourne la liste des instances stoppées.
-     *
-     * @return string
-     */
-    public function getStoppedInstances(): string
-    {
-        $result = $this->clientInfo();
-
-        $listStopped = 'Stopped instances : ';
-
-        foreach($result['Reservations'] as $instances){
-            if($instances['Instances'][0]['State']['Name'] == 'stopped'){
-                $listStopped = $listStopped .$instances['Instances'][0]['InstanceId'].' ';
-            }
-        }
-
-        return $listStopped;
+        return $listInstances;
     }
 
     /**
